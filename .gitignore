@@ -6,6 +6,7 @@ yarn.lock
 yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
+dist/
 selenium-debug.log
 node_modules
 release
