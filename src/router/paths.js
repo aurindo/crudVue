@@ -85,6 +85,16 @@ export default [
       `@/pages/paciente/PacienteList.vue`
     )
   },
+  {
+    path: '/paciente_edit',
+    meta: { breadcrumb: true },
+    name: 'PacienteEdit',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/paciente/PacienteEdit.vue`
+    )
+  },  
 
   // {
   //   path: '/calendar',

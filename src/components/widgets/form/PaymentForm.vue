@@ -50,7 +50,6 @@
         class="mr-2"
         label="Expire Date"
         :error-messages="errors.collect('Expire Date')"        
-        append-icon="today"
         type="date"
         v-model="form.expireDate"
         required

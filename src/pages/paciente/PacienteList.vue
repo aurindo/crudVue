@@ -14,9 +14,7 @@
                 hide-details
                 class="hidden-sm-and-down"
                 ></v-text-field>     
-              <v-btn icon>
-                <v-icon>filter_list</v-icon>
-              </v-btn>
+              <v-btn color="primary" @click="goEdit">Novo</v-btn>
             </v-toolbar>
             <v-divider></v-divider>
             <v-card-text class="pa-0">
@@ -43,10 +41,10 @@
                   <td>{{ props.item.lastAppointment | date}}</td>
                   <td>{{ props.item.nextAppointment | date}}</td>
                   <td>
-                    <v-btn depressed outline icon fab dark color="primary" small>
+                    <v-btn @click="goEdit" depressed outline icon fab dark color="primary" small>
                       <v-icon>edit</v-icon>
                     </v-btn>
-                    <v-btn depressed outline icon fab dark color="pink" small>
+                    <v-btn @click="onDelete" depressed outline icon fab dark color="pink" small>
                       <v-icon>delete</v-icon>
                     </v-btn>                   
                   </td>
@@ -62,6 +60,7 @@
 
 <script>
 import { Items as Users } from '@/api/user';
+import router from '@/router';
 import { mapGetters, mapActions } from 'vuex';
 import date from '@/filters/date.filter';
 
@@ -111,6 +110,12 @@ export default {
   methods: {
     goHome () {
       this.$router.push({ path: '/' });
+    },
+    goEdit () {
+      this.$router.push({ name: 'PacienteEdit' });
+    },    
+    onDelete () {
+      alert('Delete!');
     },
     ...mapActions('patient', [
       'list'
