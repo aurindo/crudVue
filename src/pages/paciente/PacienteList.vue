@@ -40,8 +40,8 @@
                   </td>
                   <td>{{ props.item.name }}</td>
                   <td>{{ props.item.patientType }}</td>
-                  <td>{{ props.item.lastAppointment }}</td>
-                  <td>{{ props.item.nextAppointment }}</td>
+                  <td>{{ props.item.lastAppointment | date}}</td>
+                  <td>{{ props.item.nextAppointment | date}}</td>
                   <td>
                     <v-btn depressed outline icon fab dark color="primary" small>
                       <v-icon>edit</v-icon>
@@ -63,8 +63,12 @@
 <script>
 import { Items as Users } from '@/api/user';
 import { mapGetters, mapActions } from 'vuex';
+import date from '@/filters/date.filter';
 
 export default {
+  filters: {
+    date
+  }, 
   data () { 
     return {
       search: '',
@@ -95,7 +99,7 @@ export default {
         items: this.patients,
       },
     };
-  },
+  }, 
   computed: {
     ...mapGetters('patient', [
       'patients'
