@@ -21,7 +21,7 @@
               <v-data-table
                 :headers="complex.headers"
                 :search="search"
-                :items="patients"
+                :items="items"
                 :rows-per-page-items="[10,25,50,{text:'All','value':-1}]"
                 class="elevation-1"
                 item-key="name"
@@ -38,8 +38,8 @@
                   </td>
                   <td>{{ props.item.name }}</td>
                   <td>{{ props.item.patientType }}</td>
-                  <td>{{ props.item.lastAppointment | date}}</td>
-                  <td>{{ props.item.nextAppointment | date}}</td>
+                  <td>{{ props.item.lastAppointment}}</td>
+                  <td>{{ props.item.nextAppointment}}</td>
                   <td>
                     <v-btn @click="goEdit" depressed outline icon fab dark color="primary" small>
                       <v-icon>edit</v-icon>
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import { Items as Users } from '@/api/user';
 import router from '@/router';
 import { mapGetters, mapActions } from 'vuex';
 import date from '@/filters/date.filter';
@@ -95,7 +94,12 @@ export default {
             value: 'actions'
           },          
         ],
-        items: this.patients,
+        items: [{
+          name: 'a',
+          patientType: 'b',
+          lastAppointment: 'c',
+          nextAppointment: 'd',
+        }],
       },
     };
   }, 
@@ -105,7 +109,7 @@ export default {
     ])
   },
   mounted () {
-    this.list();
+    // this.items = this.patients;
   },  
   methods: {
     goHome () {
