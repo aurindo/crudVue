@@ -8,10 +8,14 @@ export default class PatientService {
     Vue.http.options.root = apiUrl;
   }
 
+  async getById (id) {
+    LOGGER.info('Getting patients by id');
+    return Vue.http.get('patients/' + id);
+  }
+
   async getAll () {
     LOGGER.info('Getting all patients');
-    const all = Vue.http.get('patients');
-    return all;
+    return Vue.http.get('patients');
   }
 
   async delete (id) {
@@ -21,7 +25,6 @@ export default class PatientService {
 
   async save (data) {
     LOGGER.info('Save patient');
-    const all = Vue.http.post('patients', data);
-    return all;
+    return Vue.http.post('patients', data);
   }
 }

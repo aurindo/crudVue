@@ -86,7 +86,7 @@ export default [
     )
   },
   {
-    path: '/paciente_edit',
+    path: '/paciente_edit/:patientId',
     meta: { breadcrumb: true },
     name: 'PacienteEdit',
     component: () => import(
@@ -94,8 +94,7 @@ export default [
       /* webpackMode: "lazy-once" */
       `@/pages/paciente/PacienteEdit.vue`
     )
-  },  
-
+  },
   // {
   //   path: '/calendar',
   //   meta: { breadcrumb: true },

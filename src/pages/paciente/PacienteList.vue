@@ -21,7 +21,7 @@
               <v-data-table
                 :headers="complex.headers"
                 :search="search"
-                :items="items"
+                :items="complex.items"
                 :rows-per-page-items="[10,25,50,{text:'All','value':-1}]"
                 class="elevation-1"
                 item-key="name"
@@ -41,7 +41,7 @@
                   <td>{{ props.item.lastAppointment}}</td>
                   <td>{{ props.item.nextAppointment}}</td>
                   <td>
-                    <v-btn @click="goEdit" depressed outline icon fab dark color="primary" small>
+                    <v-btn @click="goEdit(props.item.id)" depressed outline icon fab dark color="primary" small>
                       <v-icon>edit</v-icon>
                     </v-btn>
                     <v-btn @click="onDelete" depressed outline icon fab dark color="pink" small>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { Items as Users } from '@/api/user';
 import router from '@/router';
 import { mapGetters, mapActions } from 'vuex';
 import date from '@/filters/date.filter';
@@ -94,29 +95,25 @@ export default {
             value: 'actions'
           },          
         ],
-        items: [{
-          name: 'a',
-          patientType: 'b',
-          lastAppointment: 'c',
-          nextAppointment: 'd',
-        }],
+        items: [],
       },
     };
   }, 
   computed: {
     ...mapGetters('patient', [
       'patients'
-    ])
+    ]),
   },
-  mounted () {
-    // this.items = this.patients;
+  async mounted () {
+    await this.list();
+    this.complex.items = this.patients;
   },  
   methods: {
     goHome () {
       this.$router.push({ path: '/' });
     },
-    goEdit () {
-      this.$router.push({ name: 'PacienteEdit' });
+    goEdit (id) {
+      this.$router.push({ name: 'PacienteEdit', params: { patientId: id }});
     },    
     onDelete () {
       alert('Delete!');

@@ -9,7 +9,7 @@
                   <v-flex xs12>
                     <v-text-field
                       label="Nome"
-                      v-model="name"
+                      v-model="patient.name"
                       :rules="[rules.required]"
                     ></v-text-field>
                   </v-flex>
@@ -18,7 +18,7 @@
                   <v-flex xs12>
                     <v-text-field
                       label="E-mail"
-                      v-model="email"
+                      v-model="patient.email"
                       :rules="[rules.email]"
                     ></v-text-field>
                   </v-flex>
@@ -27,7 +27,7 @@
                   <v-flex xs12>
                     <v-text-field
                       label="Telefone"
-                      v-model="phoneMain"
+                      v-model="patient.mainPhone"
                       :rules="[rules.required, rules.phone]"
                       mask="(##) #####-####"
                     ></v-text-field>
@@ -37,8 +37,8 @@
                   <v-flex xs12>
                     <v-select
                       :items="patientTypes"
-                      v-model="patientType"
-                      label="Categoria de Pasciente"
+                      v-model="patient.category"
+                      label="Categoria de Paciente"
                       auto
                       required
                       :rules="[rules.required]"
@@ -54,7 +54,7 @@
                       :error-messages="errors.collect('Expire Date')"        
                       append-icon="today"
                       type="date"
-                      v-model="schedule"
+                      v-model="patient.schedule"
                       required
                       :rules="[rules.required]"
                     ></v-text-field>
@@ -74,13 +74,16 @@
 
 <script>
 import VWidget from '@/components/VWidget';
+import { mapActions } from 'vuex';
 export default {
   components: {
     VWidget
   },
   data () {
     return {
-      email: '',
+      patient: {
+        id: this.$route.params.patientId,
+      },
       rules: {
         required: (value) => !!value || 'Obrigatório.',
         email: (value) => {
@@ -110,14 +113,25 @@ export default {
     };
   },
   computed: {
-  },  
+  }, 
+  async mounted () {
+    this.patient = this.loadPatient(this.patient.id); 
+  }, 
   methods: {
+    ...mapActions('patient', [
+      'load'
+    ]),
     goBack () {
       this.$router.go(-1);
     },
     onSave () {
       alert('onSave!!');
-    }
+    },
+    async loadPatient (id) {
+      if (!isNaN(id)) {
+        this.patient = await this.load(id);
+      }
+    },
   }  
 };
 </script>
